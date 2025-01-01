@@ -20,12 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <CopilotKit runtimeUrl="/api/copilot">
+
         <body className={comfortaa.className}>
-          {/* <CopilotSidebar /> */}
-          {children}
+        <CopilotKit runtimeUrl="/api/copilotkit" agent="dsa_agent">
+     
+            {children}
+        </CopilotKit>
         </body>
-      </CopilotKit>
+
     </html>
   )
 }

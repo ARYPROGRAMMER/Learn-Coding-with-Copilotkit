@@ -17,13 +17,13 @@ class CopilotRequest(BaseModel):
     testCases: List[str]
 
 class CopilotResponse(BaseModel):
-    solution: Optional[str]
-    time_complexity_out: Optional[str]
-    space_complexity_out: Optional[str]
+    code: Optional[str]
+    explanation: Optional[str]
+    time_complexity: Optional[str]
+    space_complexity: Optional[str]
     visualization: Optional[str]
-    test_cases_out: List[str]
 
-@app.post("/api/copilot")
+@app.post("/api/copilotkit")
 async def process_request(request: CopilotRequest) -> CopilotResponse:
     logger.info(f"Received request with question: {request.question}")
     
@@ -31,13 +31,13 @@ async def process_request(request: CopilotRequest) -> CopilotResponse:
         # Create initial state
         initial_state: AgentState = {
             "question": request.question,
-            "test_cases": request.testCases,
-            "solution": None,
+            "testCases": request.testCases,
+            "code": None,
             "explanation": None,
             "time_complexity": None,
             "space_complexity": None,
-            "visualization": None,
-            "test_cases_out": []
+            "visualization": None
+        
         }
         
         logger.info("Creating graph...")
@@ -45,14 +45,14 @@ async def process_request(request: CopilotRequest) -> CopilotResponse:
         
         logger.info("Running graph...")
         final_state = graph.invoke(initial_state)
-        
+
         logger.info("Processing completed successfully")
         return CopilotResponse(
-            solution=final_state["solution"],
-            time_complexity_out=final_state["time_complexity"],
-            space_complexity_out=final_state["space_complexity"],
+            code=final_state["code"],
+            explanation=final_state["explanation"],
+            time_complexity=final_state["time_complexity"],
+            space_complexity=final_state["space_complexity"],
             visualization=final_state["visualization"],
-            test_cases_out=final_state["test_cases_out"]
         )
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")

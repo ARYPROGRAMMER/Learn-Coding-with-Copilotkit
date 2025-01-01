@@ -131,12 +131,12 @@ const DSASolutionInterface = () => {
     //   setTimeComplexity(response.timeComplexity);
     //   setSpaceComplexity(response.spaceComplexity);
     //   setEditorCode(response.code);
-      const response = await fetch('/api/copilot', {
+      const response = await fetch('/api/copilotkit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, testCases })
+        body: JSON.stringify({ "question": question, "testCases" :testCases })
       });
-      
+      console.log(response);
       const data = await response.json();
       setSolution(data);
       setTimeComplexity(data.timeComplexity);
