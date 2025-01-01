@@ -12,51 +12,51 @@ import { motion, AnimatePresence } from "framer-motion";
 import dynamic from 'next/dynamic';
 
 const CodeEditor = dynamic(() => import('../components/Editor'), { ssr: false });
-const DEFAULT_SOLUTION_CODE = `/**
- * Solution for the DSA problem
- * @param {any} input - The input parameter(s) for the problem
- * @returns {any} - The result of the solution
- */
-function solution(input) {
-  // Initialize variables
-  let result;
+// const DEFAULT_SOLUTION_CODE = `/**
+//  * Solution for the DSA problem
+//  * @param {any} input - The input parameter(s) for the problem
+//  * @returns {any} - The result of the solution
+//  */
+// function solution(input) {
+//   // Initialize variables
+//   let result;
   
-  // Solution implementation
-  try {
-    // Your solution logic here
+//   // Solution implementation
+//   try {
+//     // Your solution logic here
     
-    // Example implementation
-    if (Array.isArray(input)) {
-      result = input.reduce((acc, curr) => acc + curr, 0);
-    } else {
-      result = input;
-    }
-  } catch (error) {
-    console.error('Error in solution:', error);
-    throw error;
-  }
+//     // Example implementation
+//     if (Array.isArray(input)) {
+//       result = input.reduce((acc, curr) => acc + curr, 0);
+//     } else {
+//       result = input;
+//     }
+//   } catch (error) {
+//     console.error('Error in solution:', error);
+//     throw error;
+//   }
   
-  return result;
-}
+//   return result;
+// }
 
-// Example test cases
-const testCases = [
-  { input: [1, 2, 3, 4, 5], expectedOutput: 15 },
-  { input: [], expectedOutput: 0 },
-  { input: [42], expectedOutput: 42 }
-];
+// // Example test cases
+// const testCases = [
+//   { input: [1, 2, 3, 4, 5], expectedOutput: 15 },
+//   { input: [], expectedOutput: 0 },
+//   { input: [42], expectedOutput: 42 }
+// ];
 
-// Run test cases
-testCases.forEach((testCase, index) => {
-  const output = solution(testCase.input);
-  console.log(\`Test case \${index + 1}:\`);
-  console.log('Input:', testCase.input);
-  console.log('Expected:', testCase.expectedOutput);
-  console.log('Actual:', output);
-  console.log('Pass:', output === testCase.expectedOutput);
-  console.log('---');
-});
-`;
+// // Run test cases
+// testCases.forEach((testCase, index) => {
+//   const output = solution(testCase.input);
+//   console.log(\`Test case \${index + 1}:\`);
+//   console.log('Input:', testCase.input);
+//   console.log('Expected:', testCase.expectedOutput);
+//   console.log('Actual:', output);
+//   console.log('Pass:', output === testCase.expectedOutput);
+//   console.log('---');
+// });
+// `;
 
 
 const DSASolutionInterface = () => {
@@ -68,7 +68,7 @@ const DSASolutionInterface = () => {
     visualization?: string;
   }
   const [showEditor, setShowEditor] = useState(false);
-  const [editorCode, setEditorCode] = useState('DEFAULT_SOLUTION_CODE');
+  const [editorCode, setEditorCode] = useState('');
 
   const handleOpenEditor = () => {
     if (solution?.code) {
@@ -110,38 +110,39 @@ const DSASolutionInterface = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-     // Placeholder for API call
-     const response = await new Promise<{
-        explanation: string;
-        diagram: string;
-        code: string;
-        timeComplexity: string;
-        spaceComplexity: string;
-      }>(resolve => 
-        setTimeout(() => resolve({
-          explanation: "Example explanation of the solution...",
-          diagram: "graph TD\nA[Start] --> B[Process]\nB --> C[End]",
-          code: DEFAULT_SOLUTION_CODE,
-          timeComplexity: "O(n)",
-          spaceComplexity: "O(1)"
-        }), 1500)
-      );
-      const data = response;
-      setSolution(data);
-      setTimeComplexity(response.timeComplexity);
-      setSpaceComplexity(response.spaceComplexity);
-      setEditorCode(response.code);
-      // const response = await fetch('/api/copilot', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ question, testCases })
-      // });
+    //  // Placeholder for API call
+    //  const response = await new Promise<{
+    //     explanation: string;
+    //     diagram: string;
+    //     code: string;
+    //     timeComplexity: string;
+    //     spaceComplexity: string;
+    //   }>(resolve => 
+    //     setTimeout(() => resolve({
+    //       explanation: "Example explanation of the solution...",
+    //       diagram: "graph TD\nA[Start] --> B[Process]\nB --> C[End]",
+    //       code: DEFAULT_SOLUTION_CODE,
+    //       timeComplexity: "O(n)",
+    //       spaceComplexity: "O(1)"
+    //     }), 1500)
+    //   );
+    //   const data = response;
+    //   setSolution(data);
+    //   setTimeComplexity(response.timeComplexity);
+    //   setSpaceComplexity(response.spaceComplexity);
+    //   setEditorCode(response.code);
+      const response = await fetch('/api/copilot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, testCases })
+      });
       
-      // const data = await response.json();
-      // setSolution(data);
-      // setTimeComplexity(data.timeComplexity);
-      // setSpaceComplexity(data.spaceComplexity);
-      // setInsights(data.additionalInsights);
+      const data = await response.json();
+      setSolution(data);
+      setTimeComplexity(data.timeComplexity);
+      setSpaceComplexity(data.spaceComplexity);
+      setEditorCode(data.code);
+      
     } catch (error) {
       console.error('Error:', error);
     } finally {

@@ -3,7 +3,7 @@
     "dockerfile_lines": [],
     "dependencies": ["."],
     "graphs": {
-      "dsa_agent": "./dsa_agent/agent.py:graph"
+      "dsa_agent": "./graph.py:create_graph"
     },
     "env": ".env"
-  }
+}

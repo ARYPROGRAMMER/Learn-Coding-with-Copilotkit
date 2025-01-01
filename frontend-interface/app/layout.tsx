@@ -1,7 +1,7 @@
 import './globals.css'
 import { Comfortaa } from 'next/font/google'
 import { CopilotKit } from '@copilotkit/react-core'
-import { CopilotSidebar } from '@copilotkit/react-ui'
+
 
 const comfortaa = Comfortaa({ 
   subsets: ['latin'],
@@ -20,12 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* <CopilotKit runtimeUrl="/api/copilot"> */}
+      <CopilotKit runtimeUrl="/api/copilot">
         <body className={comfortaa.className}>
           {/* <CopilotSidebar /> */}
           {children}
         </body>
-      {/* </CopilotKit> */}
+      </CopilotKit>
     </html>
   )
 }
