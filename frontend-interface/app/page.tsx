@@ -7,57 +7,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Plus, Trash2, Code2, Clock, Box, PlayCircle, Brain, Lightbulb, ExternalLink } from "lucide-react";
+import { Loader2, Plus, Trash2, Code2, Clock, Box, PlayCircle, Brain, Lightbulb, ExternalLink, Cpu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from 'next/dynamic';
 import VisualizationTab from '@/components/MermaidRenderer';
 
 const CodeEditor = dynamic(() => import('../components/Editor'), { ssr: false });
-const DEFAULT_SOLUTION_CODE = `/**
- * Solution for the DSA problem
- * @param {any} input - The input parameter(s) for the problem
- * @returns {any} - The result of the solution
- */
-function solution(input) {
-  // Initialize variables
-  let result;
-  
-  // Solution implementation
-  try {
-    // Your solution logic here
-    
-    // Example implementation
-    if (Array.isArray(input)) {
-      result = input.reduce((acc, curr) => acc + curr, 0);
-    } else {
-      result = input;
-    }
-  } catch (error) {
-    console.error('Error in solution:', error);
-    throw error;
-  }
-  
-  return result;
-}
-
-// Example test cases
-const testCases = [
-  { input: [1, 2, 3, 4, 5], expectedOutput: 15 },
-  { input: [], expectedOutput: 0 },
-  { input: [42], expectedOutput: 42 }
-];
-
-// Run test cases
-testCases.forEach((testCase, index) => {
-  const output = solution(testCase.input);
-  console.log(\`Test case \${index + 1}:\`);
-  console.log('Input:', testCase.input);
-  console.log('Expected:', testCase.expectedOutput);
-  console.log('Actual:', output);
-  console.log('Pass:', output === testCase.expectedOutput);
-  console.log('---');
-});
-`;
+const DEFAULT_SOLUTION_CODE = `print("Hello, World!")`;
 
 
 const DSASolutionInterface = () => {
@@ -170,7 +126,8 @@ const DSASolutionInterface = () => {
         className="mb-8"
       >
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mt-5">Self Study with Copilotkit</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mt-5">Learn Coding with Copilotkit</h1>
+        
           <div className="flex gap-2">
             {steps.map((step, index) => (
               <Button
@@ -291,6 +248,7 @@ const DSASolutionInterface = () => {
             'Generate Solution'
           )}
         </Button>
+        
       </motion.div>
 
       {solution && (
@@ -324,13 +282,10 @@ const DSASolutionInterface = () => {
           <TabsContent value="code">
             <Card>
               <CardHeader>
-                <CardTitle>Code in Python [officially supported till now] </CardTitle>
+                <CardTitle>Python Code </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="prose max-w-none">
-                    {solution.explanation}
-                  </div>
                   <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto">
                     {solution.code}
                   </pre>
@@ -347,14 +302,14 @@ const DSASolutionInterface = () => {
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
                   <Alert>
-                    <Clock className="h-4 w-4" />
-                    <AlertDescription>
+                    <Clock className="h-4" />
+                    <AlertDescription className='h-4 mt-[5px]'>
                       Time Complexity: {timeComplexity || "Not specified"}
                     </AlertDescription>
                   </Alert>
                   <Alert>
-                    <Box className="h-4 w-4" />
-                    <AlertDescription>
+                    <Box className="h-4" />
+                    <AlertDescription className='h-4 mt-[5px]'>
                       Space Complexity: {spaceComplexity || "Not specified"}
                     </AlertDescription>
                   </Alert>
@@ -381,28 +336,13 @@ const DSASolutionInterface = () => {
           <TabsContent value="explanation">
             <Card>
               <CardHeader>
-                <CardTitle>Test Cases</CardTitle>
+                <CardTitle>Approach Explanation</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {testCases.map((testCase, index) => (
-                    <div key={index} className="border p-4 rounded-lg">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-sm font-medium">Input</label>
-                          <pre className="mt-1 p-2 bg-gray-50 rounded">
-                            {testCase.input || "Not specified"}
-                          </pre>
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium">Expected Output</label>
-                          <pre className="mt-1 p-2 bg-gray-50 rounded">
-                            {testCase.output || "Not specified"}
-                          </pre>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto">
+                    {solution.explanation}
+                  </pre>
                 </div>
               </CardContent>
             </Card>
@@ -410,6 +350,10 @@ const DSASolutionInterface = () => {
         </Tabs>
               </>
       )}
+        <Button className="w-full bg-gradient-to-r from-purple-600 p-5 text-[17px] to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white">
+              <Cpu className="h-5 w-5" />
+              Powered by CopilotKit CoAgents and Langgraphs
+            </Button>
     </div>
     </div>
 
