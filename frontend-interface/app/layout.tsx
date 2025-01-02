@@ -9,7 +9,7 @@ const comfortaa = Comfortaa({
 })
 
 export const metadata = {
-  title: 'DSA Question Solver',
+  title: 'Learn Coding with CopilotKit',
   description: 'Solve Data Structures and Algorithms questions with AI assistance',
 }
 
@@ -23,7 +23,7 @@ export default function RootLayout({
 
         <body className={comfortaa.className}>
         <CopilotKit runtimeUrl="/api/copilotkit" agent="dsa_agent">
-     
+
             {children}
         </CopilotKit>
         </body>
