@@ -10,7 +10,7 @@ const serviceAdapter = new GroqAdapter({ model: "llama-3.3-70b-versatile" });
 const runtime = new CopilotRuntime({
   remoteEndpoints: [
     {
-      url: process.env.REMOTE_ACTION_URL || "http://localhost:8000/api/copilotkit",
+      url: process.env.REMOTE_ACTION_URL || "http://localhost:8000/copilotkit",
     },
   ],
 });

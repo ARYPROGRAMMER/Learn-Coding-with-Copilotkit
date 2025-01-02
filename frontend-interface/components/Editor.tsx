@@ -34,7 +34,7 @@ const LANGUAGE_TO_PISTON = {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
   code,
-  language: initialLanguage = "javascript",
+  language: initialLanguage = "python",
   theme: initialTheme = "vs-dark",
   onClose,
   onChange

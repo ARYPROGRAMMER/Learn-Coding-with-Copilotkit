@@ -1,12 +1,10 @@
-# agent/api.py
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from graph import create_graph, AgentState
 import uvicorn
+from graph import AgentState, create_graph
 import logging
 
-# Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -23,7 +21,7 @@ class CopilotResponse(BaseModel):
     space_complexity: Optional[str]
     visualization: Optional[str]
 
-@app.post("/api/copilotkit")
+@app.post("/copilotkit")
 async def process_request(request: CopilotRequest) -> CopilotResponse:
     logger.info(f"Received request with question: {request.question}")
     
@@ -37,7 +35,6 @@ async def process_request(request: CopilotRequest) -> CopilotResponse:
             "time_complexity": None,
             "space_complexity": None,
             "visualization": None
-        
         }
         
         logger.info("Creating graph...")

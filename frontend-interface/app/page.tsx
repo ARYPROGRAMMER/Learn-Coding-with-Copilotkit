@@ -10,53 +10,54 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Plus, Trash2, Code2, Clock, Box, PlayCircle, Brain, Lightbulb, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from 'next/dynamic';
+import VisualizationTab from '@/components/MermaidRenderer';
 
 const CodeEditor = dynamic(() => import('../components/Editor'), { ssr: false });
-// const DEFAULT_SOLUTION_CODE = `/**
-//  * Solution for the DSA problem
-//  * @param {any} input - The input parameter(s) for the problem
-//  * @returns {any} - The result of the solution
-//  */
-// function solution(input) {
-//   // Initialize variables
-//   let result;
+const DEFAULT_SOLUTION_CODE = `/**
+ * Solution for the DSA problem
+ * @param {any} input - The input parameter(s) for the problem
+ * @returns {any} - The result of the solution
+ */
+function solution(input) {
+  // Initialize variables
+  let result;
   
-//   // Solution implementation
-//   try {
-//     // Your solution logic here
+  // Solution implementation
+  try {
+    // Your solution logic here
     
-//     // Example implementation
-//     if (Array.isArray(input)) {
-//       result = input.reduce((acc, curr) => acc + curr, 0);
-//     } else {
-//       result = input;
-//     }
-//   } catch (error) {
-//     console.error('Error in solution:', error);
-//     throw error;
-//   }
+    // Example implementation
+    if (Array.isArray(input)) {
+      result = input.reduce((acc, curr) => acc + curr, 0);
+    } else {
+      result = input;
+    }
+  } catch (error) {
+    console.error('Error in solution:', error);
+    throw error;
+  }
   
-//   return result;
-// }
+  return result;
+}
 
-// // Example test cases
-// const testCases = [
-//   { input: [1, 2, 3, 4, 5], expectedOutput: 15 },
-//   { input: [], expectedOutput: 0 },
-//   { input: [42], expectedOutput: 42 }
-// ];
+// Example test cases
+const testCases = [
+  { input: [1, 2, 3, 4, 5], expectedOutput: 15 },
+  { input: [], expectedOutput: 0 },
+  { input: [42], expectedOutput: 42 }
+];
 
-// // Run test cases
-// testCases.forEach((testCase, index) => {
-//   const output = solution(testCase.input);
-//   console.log(\`Test case \${index + 1}:\`);
-//   console.log('Input:', testCase.input);
-//   console.log('Expected:', testCase.expectedOutput);
-//   console.log('Actual:', output);
-//   console.log('Pass:', output === testCase.expectedOutput);
-//   console.log('---');
-// });
-// `;
+// Run test cases
+testCases.forEach((testCase, index) => {
+  const output = solution(testCase.input);
+  console.log(\`Test case \${index + 1}:\`);
+  console.log('Input:', testCase.input);
+  console.log('Expected:', testCase.expectedOutput);
+  console.log('Actual:', output);
+  console.log('Pass:', output === testCase.expectedOutput);
+  console.log('---');
+});
+`;
 
 
 const DSASolutionInterface = () => {
@@ -68,7 +69,7 @@ const DSASolutionInterface = () => {
     visualization?: string;
   }
   const [showEditor, setShowEditor] = useState(false);
-  const [editorCode, setEditorCode] = useState('');
+  const [editorCode, setEditorCode] = useState(DEFAULT_SOLUTION_CODE);
 
   const handleOpenEditor = () => {
     if (solution?.code) {
@@ -90,7 +91,7 @@ const DSASolutionInterface = () => {
   const steps = [
     { title: "Problem", icon: Brain },
     { title: "Test Cases", icon: PlayCircle },
-    { title: "Analysis", icon: Lightbulb },
+    { title: "Expected Complexity", icon: Lightbulb },
   ];
 
   const handleAddTestCase = () => {
@@ -110,38 +111,47 @@ const DSASolutionInterface = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-    //  // Placeholder for API call
-    //  const response = await new Promise<{
-    //     explanation: string;
-    //     diagram: string;
-    //     code: string;
-    //     timeComplexity: string;
-    //     spaceComplexity: string;
-    //   }>(resolve => 
-    //     setTimeout(() => resolve({
-    //       explanation: "Example explanation of the solution...",
-    //       diagram: "graph TD\nA[Start] --> B[Process]\nB --> C[End]",
-    //       code: DEFAULT_SOLUTION_CODE,
-    //       timeComplexity: "O(n)",
-    //       spaceComplexity: "O(1)"
-    //     }), 1500)
-    //   );
-    //   const data = response;
-    //   setSolution(data);
-    //   setTimeComplexity(response.timeComplexity);
-    //   setSpaceComplexity(response.spaceComplexity);
-    //   setEditorCode(response.code);
-      const response = await fetch('/api/copilotkit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "question": question, "testCases" :testCases })
+     // Placeholder for API call
+     const response = await new Promise<{
+        explanation: string;
+        diagram: string;
+        code: string;
+        timeComplexity: string;
+        spaceComplexity: string;
+        visualization: string;
+      }>(resolve => 
+        setTimeout(() => resolve({
+          explanation: "Example explanation of the solution...",
+          diagram: "graph TD\nA[Start] --> B[Process]\nB --> C[End]",
+          code: DEFAULT_SOLUTION_CODE,
+          timeComplexity: "O(n)",
+          spaceComplexity: "O(1)",
+          visualization: "graph TD\nA[Start] --> B[Process]\nB --> C[End]"
+
+
+        }), 1500)
+      );
+
+      setSolution({
+        code: response.code,
+        explanation: response.explanation,
+        visualization: response.diagram
       });
-      console.log(response);
-      const data = await response.json();
-      setSolution(data);
-      setTimeComplexity(data.timeComplexity);
-      setSpaceComplexity(data.spaceComplexity);
-      setEditorCode(data.code);
+      setTimeComplexity(response.timeComplexity);
+      setSpaceComplexity(response.spaceComplexity);
+      setEditorCode(response.code);
+      // const response = await fetch('/copilotkit', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ "question": question, "testCases" :testCases })
+      // });
+      
+    
+      // const data = await response.json();
+      // setSolution(data);
+      // setTimeComplexity(data.timeComplexity);
+      // setSpaceComplexity(data.spaceComplexity);
+      // setEditorCode(data.code);
       
     } catch (error) {
       console.error('Error:', error);
@@ -160,7 +170,7 @@ const DSASolutionInterface = () => {
         className="mb-8"
       >
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">DSA Problem Solver</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mt-5">Self Study with Copilotkit</h1>
           <div className="flex gap-2">
             {steps.map((step, index) => (
               <Button
@@ -295,26 +305,26 @@ const DSASolutionInterface = () => {
                 </Button>
               </div>
 
-        <Tabs defaultValue="explanation" className="space-y-4">
+        <Tabs defaultValue="code" className="space-y-4">
           <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="code">
+              <Code2 className="h-4 w-4 mr-2" /> Code
+            </TabsTrigger>
             <TabsTrigger value="explanation">
-              <Code2 className="h-4 w-4 mr-2" /> Solution
+              <Clock className="h-4 w-4 mr-2" /> Explanation
             </TabsTrigger>
             <TabsTrigger value="complexity">
-              <Clock className="h-4 w-4 mr-2" /> Complexity
+              <Box className="h-4 w-4 mr-2" /> Obtained Complexity
             </TabsTrigger>
             <TabsTrigger value="visualization">
-              <Box className="h-4 w-4 mr-2" /> Visualization
-            </TabsTrigger>
-            <TabsTrigger value="test">
-              <PlayCircle className="h-4 w-4 mr-2" /> Test Cases
+              <PlayCircle className="h-4 w-4 mr-2" /> Visualization
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="explanation">
+          <TabsContent value="code">
             <Card>
               <CardHeader>
-                <CardTitle>Solution Explanation</CardTitle>
+                <CardTitle>Code in Python [officially supported till now] </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -361,16 +371,14 @@ const DSASolutionInterface = () => {
               <CardContent>
                 <div className="border p-4 rounded-lg bg-gray-50">
                   {solution.visualization && (
-                    <pre className="text-sm whitespace-pre-wrap overflow-x-auto">
-                      {solution.visualization}
-                    </pre>
+                  <VisualizationTab visualization={solution.visualization} />
                   )}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="test">
+          <TabsContent value="explanation">
             <Card>
               <CardHeader>
                 <CardTitle>Test Cases</CardTitle>
