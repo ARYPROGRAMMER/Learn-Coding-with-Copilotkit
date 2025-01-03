@@ -66,7 +66,7 @@ const DSASolutionInterface = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/copilotkit", {
+      const response = await fetch("https://learn-coding-with-copilotkit.onrender.com/copilotkit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
