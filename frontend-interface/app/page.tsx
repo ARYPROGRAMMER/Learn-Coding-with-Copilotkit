@@ -102,7 +102,7 @@ const DSASolutionInterface = () => {
       setSpaceComplexity(data.space_complexity || "O(1)");
       setEditorCode(cleanCode);
     } catch (error) {
-
+      console.error(error);
       try {
 
         const response = await fetch("https://learn-coding-with-copilotkit.onrender.com/copilotkit", {
