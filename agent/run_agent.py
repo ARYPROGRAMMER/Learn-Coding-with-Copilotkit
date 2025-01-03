@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000","https://learn-coding-with-copilotkit.vercel.app/"],  
+    allow_origins=["http://localhost:3000","https://learn-coding-with-copilotkit.vercel.app"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -65,4 +65,4 @@ async def process_request(request: CopilotRequest) -> CopilotResponse:
 
 if __name__ == "__main__":
     logger.info("Starting Copilot API server...")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="https://learn-coding-with-copilotkit.onrender.com", port=8000)
