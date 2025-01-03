@@ -626,7 +626,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Loader2, ExternalLink, Cpu, MessageSquare } from 'lucide-react';
@@ -674,7 +674,7 @@ const DSASolutionInterface = () => {
   const [spaceComplexity, setSpaceComplexity] = useState("");
   const [activeStep, setActiveStep] = useState(0);
   const [showChat, setShowChat] = useState(false);
-  const [messages, setMessages] = useState<TextMessage[]>([]);
+  // const [messages, setMessages] = useState<TextMessage[]>([]);
 
   const handleOpenEditor = () => {
     if (solution?.code) {
@@ -754,6 +754,7 @@ const DSASolutionInterface = () => {
 
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { state, setState, run } = useCoAgent<AgentState>({
     name: "dsa_agent",
     initialState: {
