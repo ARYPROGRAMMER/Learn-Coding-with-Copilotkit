@@ -67,8 +67,6 @@ const DSASolutionInterface = () => {
     setLoading(true);
     try {
 
-      
-
       const response = await fetch("https://novel-tasia-arya007-ab53373f.koyeb.app/copilotkit", {
         method: "POST",
         headers: {
@@ -97,7 +95,7 @@ const DSASolutionInterface = () => {
       setSolution({
         code: cleanCode,
         explanation: data.explanation || "",
-        visualization: cleanVisualization,https://novel-tasia-arya007-ab53373f.koyeb.app/copilotkit
+        visualization: cleanVisualization,
       });
 
       setTimeComplexity(data.time_complexity || "O(1)");
