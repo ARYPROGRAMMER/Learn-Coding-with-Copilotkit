@@ -13,6 +13,7 @@ import TestCases from "@/components/TestCases";
 import ComplexityInput from "@/components/ComplexityInput";
 import SolutionDisplay from "@/components/SolutionDisplay";
 import { useCoAgent, useCopilotChat } from "@copilotkit/react-core";
+import GitHubStarButtons from "@/components/StarComponent";
 
 
 interface AgentState {
@@ -272,6 +273,7 @@ const DSASolutionInterface = () => {
             Powered by CopilotKit CoAgents and Langgraphs
           </Button>
         </motion.div>
+        <GitHubStarButtons />
       </div>
 
        <AnimatePresence>
