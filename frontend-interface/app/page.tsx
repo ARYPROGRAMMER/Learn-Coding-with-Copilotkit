@@ -66,7 +66,10 @@ const DSASolutionInterface = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://learn-coding-with-copilotkit.onrender.com/copilotkit", {
+
+      
+
+      const response = await fetch("https://novel-tasia-arya007-ab53373f.koyeb.app/copilotkit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,14 +97,55 @@ const DSASolutionInterface = () => {
       setSolution({
         code: cleanCode,
         explanation: data.explanation || "",
-        visualization: cleanVisualization,
+        visualization: cleanVisualization,https://novel-tasia-arya007-ab53373f.koyeb.app/copilotkit
       });
 
       setTimeComplexity(data.time_complexity || "O(1)");
       setSpaceComplexity(data.space_complexity || "O(1)");
       setEditorCode(cleanCode);
     } catch (error) {
-      console.error("Error:", error);
+
+      try {
+
+        const response = await fetch("https://learn-coding-with-copilotkit.onrender.com/copilotkit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            question,
+            testCases: testCases.map((tc) => tc.input),
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+  
+        const cleanCode = (data.code || "").replace(/```python\n?|\n?```/g, "");
+        const cleanVisualization = (data.visualization || "").replace(
+          /```mermaid\n?|\n?```/g,
+          ""
+        );
+  
+        setSolution({
+          code: cleanCode,
+          explanation: data.explanation || "",
+          visualization: cleanVisualization,
+        });
+  
+        setTimeComplexity(data.time_complexity || "O(1)");
+        setSpaceComplexity(data.space_complexity || "O(1)");
+        setEditorCode(cleanCode);
+      }
+      catch (error) {
+        console.error(error);
+      }
+
     } finally {
       setLoading(false);
     }
