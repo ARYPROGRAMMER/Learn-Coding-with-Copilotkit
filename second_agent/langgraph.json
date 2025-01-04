@@ -1,0 +1,9 @@
+{
+    "python_version": "3.12",
+    "dockerfile_lines": [],
+    "dependencies": ["."],
+    "graphs": {
+      "dsa_agent": "./graph.py:create_graph"
+    },
+    "env": ".env"
+}

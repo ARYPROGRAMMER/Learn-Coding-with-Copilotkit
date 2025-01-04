@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
 
         <body className={comfortaa.className}>
-        <CopilotKit runtimeUrl="/api/copilotkit" agent="dsa_agent">
+        <CopilotKit runtimeUrl="/api/copilotkit" >
             {children}
         </CopilotKit>
         </body>
