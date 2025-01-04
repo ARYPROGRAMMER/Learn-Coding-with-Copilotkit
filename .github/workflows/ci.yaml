@@ -1,0 +1,13 @@
+name: Trigger Render Deploy
+
+on:
+  schedule:
+    - cron: '*/45 * * * *'  # every 45 minutes
+
+jobs:
+  ping-render:
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Call Render Deploy Hook
+        run: |
+          curl https://learn-coding-with-copilotkit.onrender.com/copilotkit
