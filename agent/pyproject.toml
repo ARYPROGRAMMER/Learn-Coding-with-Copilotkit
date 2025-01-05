@@ -1,11 +1,12 @@
-name = "my_agent"
+[tool.poetry]
+name = "dsa_agent"
 version = "0.1.0"
 description = "Starter"
-authors = ["ARYA SINGH <notaryasingh@gmail.com>"]
+authors = ["Arya Pratap Singh <notaryasingh@gmail.com>"]
 license = "MIT"
 
 [project]
-name = "greeter"
+name = "dsa_agent"
 version = "0.0.1"
 
 [build-system]
@@ -24,6 +25,11 @@ python-dotenv = "^1.0.1"
 langchain-core = "^0.3.25"
 langgraph-cli = {extras = ["inmem"], version = "^0.1.64"}
 langchain-groq = "^0.2.2"
+chroma = "^0.2.0"
+fastembed = "^0.5.0"
+bs4 = "^0.0.2"
+faiss-cpu = "^1.9.0.post1"
+ipykernel = "^6.29.5"
 
 [tool.poetry.scripts]
-demo = "run_agent:main"
+demo = "dsa_agent.demo:main"

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Loader2, ExternalLink, Cpu, MessageSquare } from 'lucide-react';
+import { Loader2, ExternalLink, Cpu, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Role, TextMessage } from "@copilotkit/runtime-client-gql";
 import ChatInterface from "@/components/ChatInterface";
@@ -15,7 +15,6 @@ import SolutionDisplay from "@/components/SolutionDisplay";
 import { useCoAgent, useCopilotChat } from "@copilotkit/react-core";
 import GitHubStarButtons from "@/components/StarComponent";
 
-
 interface AgentState {
   question: string;
   testCases: { input: string; output: string }[];
@@ -26,19 +25,16 @@ interface AgentState {
   visualization?: string;
 }
 
-
-
 interface Solution {
   code: string;
   explanation: string;
   visualization?: string;
 }
-  const CodeEditor = dynamic(() => import("../components/Editor"), {
-    ssr: false,
-  });
+const CodeEditor = dynamic(() => import("../components/Editor"), {
+  ssr: false,
+});
 
 const DSASolutionInterface = () => {
-
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
@@ -67,19 +63,21 @@ const DSASolutionInterface = () => {
 
     setLoading(true);
     try {
-
-      const response = await fetch("https://novel-tasia-arya007-ab53373f.koyeb.app/copilotkit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          question,
-          testCases: testCases.map((tc) => tc.input),
-        }),
-      });
+      const response = await fetch(
+        "https://novel-tasia-arya007-ab53373f.koyeb.app/copilotkit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            question,
+            testCases: testCases.map((tc) => tc.input),
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -105,46 +103,46 @@ const DSASolutionInterface = () => {
     } catch (error) {
       console.error(error);
       try {
+        const response = await fetch(
+          "https://learn-coding-with-copilotkit.onrender.com/copilotkit",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              question,
+              testCases: testCases.map((tc) => tc.input),
+            }),
+          }
+        );
 
-        const response = await fetch("https://learn-coding-with-copilotkit.onrender.com/copilotkit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            question,
-            testCases: testCases.map((tc) => tc.input),
-          }),
-        });
-  
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
+
         const data = await response.json();
-  
+
         const cleanCode = (data.code || "").replace(/```python\n?|\n?```/g, "");
         const cleanVisualization = (data.visualization || "").replace(
           /```mermaid\n?|\n?```/g,
           ""
         );
-  
+
         setSolution({
           code: cleanCode,
           explanation: data.explanation || "",
           visualization: cleanVisualization,
         });
-  
+
         setTimeComplexity(data.time_complexity || "O(1)");
         setSpaceComplexity(data.space_complexity || "O(1)");
         setEditorCode(cleanCode);
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error);
       }
-
     } finally {
       setLoading(false);
     }
@@ -152,11 +150,13 @@ const DSASolutionInterface = () => {
 
   const handleRetry = () => {
     setShowChat(true);
-        const initialMessage = `I need an alternative solution for the following problem:
+    const initialMessage = `I need an alternative solution for the following problem:
 
     Problem: ${question}
 
-    Test Cases: ${testCases.map(tc => `Input: ${tc.input}, Output: ${tc.output}`).join('\n')}
+    Test Cases: ${testCases
+      .map((tc) => `Input: ${tc.input}, Output: ${tc.output}`)
+      .join("\n")}
 
     Expected Time Complexity: ${timeComplexity}
     Expected Space Complexity: ${spaceComplexity}
@@ -167,8 +167,6 @@ const DSASolutionInterface = () => {
     Please provide a different approach or optimization.`;
 
     run(() => new TextMessage({ role: Role.System, content: initialMessage }));
-    
-
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -182,14 +180,21 @@ const DSASolutionInterface = () => {
       code: "",
       explanation: "",
       visualization: "",
-    }
-  })
-  
-  const { isLoading, appendMessage, visibleMessages } = useCopilotChat()
+    },
+  });
+
+  const { isLoading, appendMessage, visibleMessages } = useCopilotChat();
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <div className={`flex-1 p-8 ${showEditor || showChat ? "w-1/2" : "w-full"}`}>
+      <ChatInterface
+        isLoading={isLoading}
+        appendMessage={appendMessage}
+        visibleMessages={visibleMessages as TextMessage[]}
+      />
+      <div
+        className={`flex-1 p-8 ${showEditor || showChat ? "w-1/2" : "w-full"}`}
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -199,7 +204,10 @@ const DSASolutionInterface = () => {
             Learn Coding with CopilotKit
           </h1>
 
-          <StepNavigation activeStep={activeStep} setActiveStep={setActiveStep} />
+          <StepNavigation
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+          />
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -276,7 +284,7 @@ const DSASolutionInterface = () => {
         <GitHubStarButtons />
       </div>
 
-       <AnimatePresence>
+      <AnimatePresence>
         {showChat && (
           <motion.div
             initial={{ width: 0, opacity: 0 }}
@@ -288,14 +296,16 @@ const DSASolutionInterface = () => {
             <div className="h-full flex flex-col">
               <div className="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
                 <h2 className="text-xl font-semibold">Chat with AI</h2>
-                <Button onClick={() => setShowChat(false)} variant="ghost">Close</Button>
+                <Button onClick={() => setShowChat(false)} variant="ghost">
+                  Close
+                </Button>
               </div>
               <div className="flex-grow overflow-hidden">
-                    <ChatInterface
-              isLoading={isLoading}
-              appendMessage={appendMessage}
-              visibleMessages={visibleMessages as TextMessage[]}
-            />
+                <ChatInterface
+                  isLoading={isLoading}
+                  appendMessage={appendMessage}
+                  visibleMessages={visibleMessages as TextMessage[]}
+                />
               </div>
             </div>
           </motion.div>
@@ -324,4 +334,3 @@ const DSASolutionInterface = () => {
 };
 
 export default DSASolutionInterface;
-
