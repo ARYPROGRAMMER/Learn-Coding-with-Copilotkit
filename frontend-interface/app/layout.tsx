@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={comfortaa.className}>
+      <body suppressHydrationWarning className={comfortaa.className}>
         <CopilotKit runtimeUrl="/api/copilotkit" agent="dsa_agent">
           {children}
         </CopilotKit>

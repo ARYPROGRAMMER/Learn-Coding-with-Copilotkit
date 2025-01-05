@@ -16,9 +16,8 @@ def retrieve_question(state):
         state (dict): New key added to state, documents, that contains retrieved documents
     """
     print("---GETTING QUESTION---")
-    messages = state["messages"]
-    question = messages[-1].content
-
+    question = state["question"]
+    print(f"---nodes new QUESTION DETECTED: {question}---")
     return {
         **state,
         "question": question,
@@ -49,9 +48,12 @@ def code_generation_in_node(state):
 
     print("---TRANSFORM QUERY---")
     question = state["question"]
-    testCases = state["testCases"]
+    # testCases = state["testCases"]
+    # print(testCases)
+    # if testCases == []:
+        # testCases = ["X RETURNS Y"]
 
-    code_generated = code_writer.invoke({"question": question , "testCases": testCases})
+    code_generated = code_writer.invoke({"question": question })
     return {**state, "code": code_generated}
 
 def visualize_code(state):
@@ -85,7 +87,7 @@ def complexity_analysis(state):
     code = state["code"]
 
     complexity = complexity_generated.invoke({"code": code})
-    return {**state, "time_complexity": list(complexity)[0], "space_complexity": list(complexity)[1]}
+    return {**state, "time_complexity": complexity, "space_complexity": complexity}
 
 def explaination_code(state):
     '''
@@ -107,7 +109,7 @@ def explaination_code(state):
 def no_context(state):
     print("---NO CONTEXT---")
 
-    messages = state["messages"]
+    messages = state["question"]
     messages.append(HumanMessage("I'm sorry, I can't find any relevant information."))
 
     return state

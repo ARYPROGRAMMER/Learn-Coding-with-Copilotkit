@@ -8,9 +8,9 @@ class VisualizationGenerator(BaseTool):
         
         Create a flowchart using Mermaid syntax. Focus on key steps and decision points.
         The diagram should start with 'flowchart TD' and use proper Mermaid syntax.
-        Include clear labels and connections between nodes.
+        Include clear labels and connections between nodes. Ensure the diagram is easy to understand and follow.
 
-        DO NOT INCLUDE ANYTHING ELSE JUST THE MERMAID CODE FOR THE FLOWCHART AND MAKE IT WELL STRUCTURED AND LABELLED.
+        DO NOT INCLUDE ANYTHING ELSE JUST THE MERMAID CODE FOR THE FLOWCHART AND MAKE IT WELL STRUCTURED AND LABELLED AND ONLY AND ONLY RETURN THE MERMAID CODE.
         """
         
         response = self.model.invoke([HumanMessage(content=prompt)]) # type: ignore

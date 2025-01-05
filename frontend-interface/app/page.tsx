@@ -150,21 +150,8 @@ const DSASolutionInterface = () => {
 
   const handleRetry = () => {
     setShowChat(true);
-    const initialMessage = `I need an alternative solution for the following problem:
-
-    Problem: ${question}
-
-    Test Cases: ${testCases
-      .map((tc) => `Input: ${tc.input}, Output: ${tc.output}`)
-      .join("\n")}
-
-    Expected Time Complexity: ${timeComplexity}
-    Expected Space Complexity: ${spaceComplexity}
-
-    Previous Solution:
-    ${solution?.code}
-
-    Please provide a different approach or optimization.`;
+    const initialMessage = `
+    question: ${question}`;
 
     run(() => new TextMessage({ role: Role.System, content: initialMessage }));
   };
@@ -173,8 +160,7 @@ const DSASolutionInterface = () => {
   const { state, setState, run } = useCoAgent<AgentState>({
     name: "dsa_agent",
     initialState: {
-      question: "",
-      testCases: [],
+      question: "find greatest of 3 numbers",
       timeComplexity: "",
       spaceComplexity: "",
       code: "",
@@ -186,7 +172,7 @@ const DSASolutionInterface = () => {
   const { isLoading, appendMessage, visibleMessages } = useCopilotChat();
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div  className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <ChatInterface
         isLoading={isLoading}
         appendMessage={appendMessage}

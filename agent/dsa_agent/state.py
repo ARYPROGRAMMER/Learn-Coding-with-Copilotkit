@@ -9,18 +9,18 @@ class AgentState(TypedDict):
 
     Attributes:
         question: str
-        testCases: List[str]
+        # testCases: List[str]
         code: Optional[str]
         explanation: Optional[str]
         time_complexity: Optional[str]
         space_complexity: Optional[str]
         visualization: Optional[str]
-        messages: list of messages
+        # messages: list of messages
     """
      
     question: str
-    testCases: List[str]
-    messages: Annotated[Sequence[BaseMessage], add_messages]
+    # testCases: Optional[List[str]] # type: ignore
+    # messages: Annotated[Sequence[BaseMessage], add_messages]
     code: Optional[str] 
     explanation: Optional[str]
     time_complexity: Optional[str] 

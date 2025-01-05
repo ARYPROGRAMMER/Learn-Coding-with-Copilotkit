@@ -6,14 +6,16 @@ from dsa_agent.edges.complexity_verify import complexity_verify
 from dsa_agent.edges.explanation_verify import explaination_verify
 
 def new_question(state):
-    messages = state["messages"]
-    last_message = messages[-1]
+    question = state["question"]
+    # last_message = messages[-1]
 
     if (
-        isinstance(last_message, SystemMessage)
-        and "QUESTION UPDATED" in last_message.content
+        isinstance(question, SystemMessage)
+        and "QUESTION UPDATED" in question.content
     ):
         return "update_question"
+    
+    print("init edges new question : ", question)
 
     return "retrieve_question"
 
@@ -32,6 +34,7 @@ def decide_to_generate_code(state):
     print("---ASSESS GENERATED CODE---")
     code = state["code"]
     question = state["question"]
+    # testCases = state["testCases"]
 
     print("---GRADE CODE---")
     score = code_verify.invoke({"question": question, "code": code})
