@@ -7,8 +7,6 @@ from dsa_agent.edges.explanation_verify import explaination_verify
 
 def new_question(state):
     question = state["question"]
-    # last_message = messages[-1]
-
     if (
         isinstance(question, SystemMessage)
         and "QUESTION UPDATED" in question.content
@@ -60,11 +58,10 @@ def decide_to_generate_visualisation(state):
     """
 
     print("---ASSESS MERMAID VISUALISATION CODE---")
-    code = state["code"]
-    visualization = state["visualization"]
+    question = state["question"]
 
     print("---GRADE CODE---")
-    score = visualisation_verify.invoke({"code": code,"visualization": visualization})
+    score = visualisation_verify.invoke({"question": question})
     grade = score.binary_score
 
     if grade == "yes":

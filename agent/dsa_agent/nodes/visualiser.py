@@ -8,15 +8,15 @@ load_dotenv()
 
 llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0)
 
-system = """You a 4000 rated Competitive Programmer that writes optimised and fully detailed working code in python \n 
-    Given a question and the generated code for it \n
-    You have to provide the appropriate mermaid code to visualise the code approach generated \n
-    Make sure that your output contains only mermaid code"""
+system = """You provide visualisation of a complex problem by generating corresponding mermaid flowchart code\n 
+    Given the question\n
+    You have to provide the appropriate mermaid flowchart code to visualise the solution\n
+    Make sure that your output contains only mermaid flowchart code in the format ```mermaid\n{code}\n```\n"""
 
 visualisation_prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system),
-        ("human", "code: \n\n {code} \n\n User question: {question}"),
+        ("human", "question: \n\n {question}"),
     ]
 )
 

@@ -9,21 +9,21 @@ class VerifyVisualisation(BaseModel):
     """Binary output to verify the mermaid code generated to visualise the python code."""
 
     binary_score: str = Field(
-        description="Python Code generated is correctly visualised by the mermaid code, 'yes' or 'no'"
+        description="Mermaid Code generated is correct, 'yes' or 'no'"
     )
 
 llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0)
 viusalisation_verification = llm.with_structured_output(VerifyVisualisation)
 
-system = """You a 4000 rated Competitive Programmer that visualises an optimised and fully detailed working code in python \n 
-    Given a question and the generated code for it \n
-    You have to provide the appropriate mermaid code to visualise the code approach generated \n
-    Make sure that your output contains only mermaid code"""
+system = """You provide visualisation of a complex problem by generating corresponding mermaid code\n 
+    Given the question\n
+    You have to provide the appropriate mermaid code to visualise the solution\n
+    Make sure that your output contains only mermaid flowchart code in the format ```mermaid\nFLOWCHART...```\n"""
 
 visualisation_prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system),
-        ("human", "Python Code Generated: \n\n {code} \n\n Visualised Code Generated in Mermaid: {visualization}"),
+        ("human", "question: \n\n {question}"),
     ]
 )
 
