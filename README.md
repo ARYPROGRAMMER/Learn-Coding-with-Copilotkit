@@ -14,8 +14,13 @@
     <img src="https://img.shields.io/badge/Frontend-Next.js-orange" alt="Frontend: Next.js Badge" />  
   </a>  
   <a href="https://youtu.be/E1q67IDcdMU">  
-    <img src="https://img.shields.io/badge/Watch-Demo%20Video-red" alt="Demo Video Badge" />  
+    <img src="https://img.shields.io/badge/Watch-Demo%20Video 1-red" alt="Demo Video Badge" />  
+  </a>    
+  
+  <a href="https://youtu.be/XpOeWhbxqOY">  
+    <img src="https://img.shields.io/badge/Watch-Demo%20Video 2-red" alt="Demo Video Badge" />  
   </a>  
+  
   <a href="https://learn-coding-with-copilotkit.vercel.app/">  
     <img src="https://img.shields.io/badge/Website-Live-brightgreen" alt="Website Badge" />  
   </a>  

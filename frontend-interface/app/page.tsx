@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Loader2, ExternalLink, Cpu, MessageSquare, Play } from "lucide-react";
+import { Loader2, ExternalLink, Cpu, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Role, TextMessage } from "@copilotkit/runtime-client-gql";
 import ChatInterface from "@/components/ChatInterface";
@@ -17,6 +17,7 @@ import GitHubStarButtons from "@/components/StarComponent";
 import Image from "next/image";
 import { CopilotSidebar } from "@copilotkit/react-ui";
 import "@copilotkit/react-ui/styles.css";
+import VideoSection from "@/components/VideoSection";
 
 interface AgentState {
   question: string;
@@ -183,13 +184,12 @@ const DSASolutionInterface = () => {
       timeComplexity,
       spaceComplexity,
     };
-  
-    // Only update if the state has actually changed
+
     if (!isStateEqual(state, newState)) {
       setState((prevState = state) => ({
         ...prevState,
         ...newState,
-        // Preserve other fields that aren't being updated
+
         code: prevState.code,
         explanation: prevState.explanation,
         visualization: prevState.visualization,
@@ -205,7 +205,6 @@ const DSASolutionInterface = () => {
 
     setShowChat(true);
 
-    // First, send the problem context
     const contextMessage = new TextMessage({
       id: "context-" + Date.now().toString(),
       role: Role.System,
@@ -218,14 +217,14 @@ const DSASolutionInterface = () => {
       `,
     });
 
-    // Then send the user's question
+
     const userMessage = new TextMessage({
       id: "user-" + Date.now().toString(),
       role: Role.User,
       content: question,
     });
 
-    // Send messages with a slight delay
+
     setTimeout(() => {
       appendMessage(contextMessage);
       setTimeout(() => {
@@ -236,27 +235,23 @@ const DSASolutionInterface = () => {
 
   const handleSolutionUpdate = (content: string) => {
     try {
-      // Extract code block
+
       const codeMatch = content.match(/```python\n([\s\S]*?)```/);
       const code = codeMatch ? codeMatch[1].trim() : "";
 
-      // Extract explanation (text before code block)
+   
       const explanation = content.split("```")[0].trim();
 
-      // Extract complexities
       const timeMatch = content.match(/[Tt]ime [Cc]omplexity:?\s*(O\([^)]+\))/);
       const spaceMatch = content.match(
         /[Ss]pace [Cc]omplexity:?\s*(O\([^)]+\))/
       );
 
-      // // Extract visualization if present
-      // const visualMatch = content.match(/```mermaid\n([\s\S]*?)```/);
 
-      // Update all states
       setSolution(prevSolution => ({
         code: code,
         explanation: explanation,
-        visualization: prevSolution?.visualization // Preserve existing visualization
+        visualization: prevSolution?.visualization 
       }));
 
       if (timeMatch) setTimeComplexity(timeMatch[1]);
@@ -287,19 +282,6 @@ const DSASolutionInterface = () => {
     }
   }, [visibleMessages]);
 
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoUrl = "https://vimeo.com/1044157863";
-
-  const getVimeoEmbedUrl = (url: string) => {
-    const videoId = url.split("vimeo.com/")[1];
-    return `https://player.vimeo.com/video/${videoId}`;
-  };
-
-  const embedUrl = getVimeoEmbedUrl(videoUrl);
-  const handlePlayClick = () => {
-    setIsPlaying(true);
-  };
 
   return (
     <div className="flex min-h-screen dark:from-gray-900 dark:to-gray-800 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent">
@@ -414,53 +396,7 @@ const DSASolutionInterface = () => {
           </Button>
         </motion.div>
         <GitHubStarButtons />
-              {/* Video Section */}
-              <motion.div
-              className="relative max-w-4xl  flex-col mx-auto mb-32 rounded-2xl overflow-hidden shadow-xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              <div className="aspect-video bg-gray-800 rounded-2xl overflow-hidden relative">
-                {isPlaying ? (
-                  <iframe
-                    className="w-full h-full"
-                    src={embedUrl}
-                    title="Vimeo video player"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                ) : (
-                  <>
-                    <Image src="/thumbnail.png" width={1800} height={1800} alt="CoAgents and Langgraph" className="object-cover h-full w-full" />
-                    <div className="absolute bottom-0 left-0 right-0 p-8">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div
-                            className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center cursor-pointer hover:bg-purple-700 transition-colors"
-                            onClick={handlePlayClick}
-                          >
-                            <Play className="h-6 w-6" />
-                          </div>
-                          <div>
-                            <p className="text-lg text-white font-semibold">See A Full Fledged Demo</p>
-                            <p className="text-purple-200">Watch the demo insight during development</p>
-                          </div>
-                        </div>
-                        <Button
-                          variant="outline"
-                          className="text-black border-white/20 hover:bg-white/10 transition-colors"
-                          onClick={() => setIsPlaying(!isPlaying)}
-                        >
-                          Learn More
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </motion.div>
+            <VideoSection />
       </div>
 
       {!showChat && (
