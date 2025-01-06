@@ -15,7 +15,7 @@ import SolutionDisplay from "@/components/SolutionDisplay";
 import { CopilotKit, useCoAgent, useCopilotChat } from "@copilotkit/react-core";
 import GitHubStarButtons from "@/components/StarComponent";
 import Image from "next/image";
-import { CopilotPopup, CopilotSidebar } from "@copilotkit/react-ui";
+import { CopilotSidebar } from "@copilotkit/react-ui";
 import "@copilotkit/react-ui/styles.css";
 
 interface AgentState {
@@ -150,7 +150,7 @@ const DSASolutionInterface = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const { state, setState } = useCoAgent<AgentState>({
     name: "dsa_agent",
     initialState: {
@@ -176,7 +176,6 @@ const DSASolutionInterface = () => {
     );
   };
   
-  // Modified useEffect
   useEffect(() => {
     const newState = {
       question,
@@ -197,24 +196,6 @@ const DSASolutionInterface = () => {
       }));
     }
   }, [question, testCases, timeComplexity, spaceComplexity]);
-
-
-
-
-
-
-
-
-
-  // useEffect(() => {
-  //   setState({
-  //     ...state,
-  //     question: question,
-  //     testCases: testCases,
-  //     timeComplexity: timeComplexity,
-  //     spaceComplexity: spaceComplexity,
-  //   });
-  // }, [question, testCases, timeComplexity, spaceComplexity]);
 
   const handleRetry = () => {
     if (!question.trim()) {
@@ -253,7 +234,6 @@ const DSASolutionInterface = () => {
     }, 100);
   };
 
-  // Add this function to handle solution updates from chat
   const handleSolutionUpdate = (content: string) => {
     try {
       // Extract code block
@@ -311,7 +291,6 @@ const DSASolutionInterface = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoUrl = "https://vimeo.com/1044157863";
 
-  // Extract Vimeo video ID from the URL and generate embeddable URL
   const getVimeoEmbedUrl = (url: string) => {
     const videoId = url.split("vimeo.com/")[1];
     return `https://player.vimeo.com/video/${videoId}`;
@@ -336,7 +315,7 @@ const DSASolutionInterface = () => {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-4xl mx-auto space-y-8"
         >
-          {/* Header */}
+   
                 <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}

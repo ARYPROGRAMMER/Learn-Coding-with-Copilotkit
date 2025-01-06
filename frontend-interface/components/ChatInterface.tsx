@@ -41,6 +41,8 @@ export default function ChatInterface({
       try {
         const content = lastMessage.content;
         if (typeof content === 'string' && content.includes('```python')) {
+            
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const solution = {
             code: content.match(/```python\n([\s\S]*?)```/)?.[1] || '',
             explanation: content.split('```')[0].trim(),
