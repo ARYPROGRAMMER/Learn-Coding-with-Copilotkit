@@ -1,8 +1,9 @@
 
+**Note : Running Locally is the Best Option as the API Keys might get exhausted after some time and the app would not work as expected.**
 
 <div align="center">  
 
-   # Learn Coding with CopilotKit, CoAgents, and LangGraphs 🚀  
+   # Learn Coding with CopilotKit, CoAgents, and LangGraphs🚀  
   <img src="./screenshots/cover.png" alt="Cover Image" />  
 </div>  
 
