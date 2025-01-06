@@ -17,14 +17,18 @@
   <a href="https://youtu.be/E1q67IDcdMU">  
     <img src="https://img.shields.io/badge/Watch-Demo%20Video 1-red" alt="Demo Video Badge" />  
   </a>    
-  
   <a href="https://youtu.be/XpOeWhbxqOY">  
     <img src="https://img.shields.io/badge/Watch-Demo%20Video 2-red" alt="Demo Video Badge" />  
   </a>  
-  
   <a href="https://learn-coding-with-copilotkit.vercel.app/">  
     <img src="https://img.shields.io/badge/Website-Live-brightgreen" alt="Website Badge" />  
   </a>  
+  <a href="https://x.com/AryaS39909342/status/1876240650322248126">  
+    <img src="https://img.shields.io/badge/Tweet-Check%20It%20Out-blue" alt="Tweet Badge" />  
+  </a>  
+  <a href="https://dev.to/aryprogrammer/learn-coding-with-copilotkit-a-revolutionary-approach-to-mastering-programming-3nlh">  
+  <img src="https://img.shields.io/badge/Blog-Read%20on%20Dev.to-blue" alt="Dev.to Badge" />  
+</a>
 </div>
 
 ---
