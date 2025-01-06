@@ -1,10 +1,25 @@
 
-# Learn Coding with CopilotKit, CoAgents, and LangGraphs 🚀  
 
-[![CopilotKit](https://img.shields.io/badge/Powered%20By-CopilotKit-brightgreen)](https://github.com/copilotkit)  
-[![Frontend: Next.js](https://img.shields.io/badge/Frontend-Next.js-orange)](https://nextjs.org/)  
-[![Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red)](https://youtu.be/E1q67IDcdMU)  
-[![Website](https://img.shields.io/badge/Website-Live-brightgreen)](https://learn-coding-with-copilotkit.vercel.app/)  
+<div align="center">  
+
+   # Learn Coding with CopilotKit, CoAgents, and LangGraphs 🚀  
+  <img src="./screenshots/cover.png" alt="Cover Image" />  
+</div>  
+
+<div align="center">  
+  <a href="https://github.com/copilotkit">  
+    <img src="https://img.shields.io/badge/Powered%20By-CopilotKit-brightgreen" alt="CopilotKit Badge" />  
+  </a>  
+  <a href="https://nextjs.org/">  
+    <img src="https://img.shields.io/badge/Frontend-Next.js-orange" alt="Frontend: Next.js Badge" />  
+  </a>  
+  <a href="https://youtu.be/E1q67IDcdMU">  
+    <img src="https://img.shields.io/badge/Watch-Demo%20Video-red" alt="Demo Video Badge" />  
+  </a>  
+  <a href="https://learn-coding-with-copilotkit.vercel.app/">  
+    <img src="https://img.shields.io/badge/Website-Live-brightgreen" alt="Website Badge" />  
+  </a>  
+</div>
 
 ---
 

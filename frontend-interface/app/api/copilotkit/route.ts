@@ -12,7 +12,7 @@ const runtime = new CopilotRuntime(
   {
   remoteEndpoints: [
     {
-      url: process.env.REMOTE_ACTION_URL || "http://localhost:8000/copilotkit" || "https://learn-coding-with-copilotkit.onrender.com/copilotkit",
+      url: process.env.REMOTE_ACTION_URL ||  "https://learn-coding-with-copilotkit-1.onrender.com/copilotkit" || "http://localhost:8000/copilotkit",
     },
   ],
 }

@@ -2,7 +2,7 @@ name: Trigger Render Deploy
 
 on:
   schedule:
-    - cron: '*/45 * * * *'  # every 45 minutes
+    - cron: '*/15 * * * *'  # every 15 minutes
 
 jobs:
   ping-render:
@@ -11,3 +11,4 @@ jobs:
       - name: Call Render Deploy Hook
         run: |
           curl https://learn-coding-with-copilotkit.onrender.com/copilotkit
+          curl https://learn-coding-with-copilotkit-1.onrender.com/copilotkit
